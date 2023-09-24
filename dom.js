@@ -23,6 +23,15 @@
 //  console.log(document.getElementsByTagName("listcreated"))
  
 //Make second item have green bg and 3 item invisible
-let list= document.getElementsByClassName("list-group-item")
-list[1].style.backgroundColor= 'green'
-list[2].style.display= 'none'
+// let list= document.getElementsByClassName("list-group-item")
+// list[1].style.backgroundColor= 'green'
+// list[2].style.display= 'none'
+
+// make 2nd list text green and odd no background green 
+let x=document.querySelectorAll(".list-group-item")
+x[1].style.color='green'
+var odd= document.querySelectorAll('li:nth-child(odd)')
+console.log(odd)
+for(var i=0; i<odd.length;i++){
+    odd[i].style.backgroundColor='green'
+}
