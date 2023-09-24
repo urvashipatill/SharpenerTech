@@ -13,12 +13,16 @@
 //     }
 // }
 
-    var ul= document.getElementById('items')
-    var li= document.createElement('li')
-    li.appendChild(document.createTextNode("Item 5"))
-    ul.appendChild(li)
-    li.className= "newlist"
-    li.tagName="listcreated"
- console.log(document.getElementsByClassName("newlist"))
- console.log(document.getElementsByTagName("listcreated"))
+//     var ul= document.getElementById('items')
+//     var li= document.createElement('li')
+//     li.appendChild(document.createTextNode("Item 5"))
+//     ul.appendChild(li)
+//     li.className= "newlist"
+//     li.tagName="listcreated"
+//  console.log(document.getElementsByClassName("newlist"))
+//  console.log(document.getElementsByTagName("listcreated"))
  
+//Make second item have green bg and 3 item invisible
+let list= document.getElementsByClassName("list-group-item")
+list[1].style.backgroundColor= 'green'
+list[2].style.display= 'none'
