@@ -1,39 +1,38 @@
-var listitem= document.querySelector("#items")
+let form= document.getElementById("addForm")
+let list= document.getElementById('items')
+// ADD ITEM OR RESPONSE ON SUBMIT BUTTON 
+ form.addEventListener('submit', addItems)
 
-// PARENT ELEMENT AND PARENT NODE
-console.log(listitem.parentNode)
-// listitem.parentNode.style.backgroundColor= '#f4f4f4'
-console.log(listitem.parentNode.parentElement)
-console.log(listitem.parentNode.parentNode)
-console.log(listitem.parentElement.style.backgroundColor= '#f3f3f2')
+//  REMOVE ITEM OR RESPONSE ON DELETE CLICK 
+list.addEventListener('click', removeItem)
 
-// CHILD NODE
-console.log(listitem.childNodes)
-console.log(listitem.children)
-console.log(listitem.children[1])
-listitem.children[1].style.backgroundColor= 'grey'
-listitem.children[3].style.backgroundColor='grey'
 
-// FIRST ELEMENT CHILD OR FIRST CHILD
-listitem.firstElementChild.style.backgroundColor='#f4f4f4'
-console.log(listitem.firstChild)
+//  CREATING FUNCTION addITems 
+ function addItems(e){
+    e.preventDefault()
+// GET THE INPUT VALUE 
+    let input= document.getElementById('item').value
+// CREATE li ELEMENT
+    var li= document.createElement('li')
+    li.className ="list-group-item"
+// CREATE THE INPUT IN FORM OF TEXT NODE AND SAVE IT IN OUR NEW ELEM li 
+    li.appendChild(document.createTextNode(input))
+    list.appendChild(li)
+// CREATE THE DELETE BTN FOR NEW ELEM
+    let deleteBtn= document.createElement('button')
+    deleteBtn.className= 'btn btn-danger btn-sm float-right delete' 
+//CREATE TEXT NODE IN DELTE BTN AS "X"
+deleteBtn.appendChild(document.createTextNode('X'))
+// PUSH THE DELETE BTN INTO LI 
+li.appendChild(deleteBtn)
+ }
 
-// LAST ELEMENT CHILD
-console.log(listitem.lastElementChild)
-listitem.lastElementChild.textContent='Hey'
-
-// NEXT SIBLING
-console.log(listitem.nextSibling)
-console.log(listitem.nextElementSibling)
-
-// CREATE CHILD OR CREATE ELEMENT
-var newDiv= document.createElement('div')
-newDiv.className='newdiv'
-newDiv.id='Hello1'
-newDiv.setAttribute('name', 'Hello world!')
-console.log(newDiv)
-var newDivtext=document.createTextNode('Hello World')
-newDiv.appendChild(newDivtext)
-var container= document.querySelector('header .container')
-var h1= document.querySelector('header h1')
-container.insertBefore(newDiv, h1)
+//  CREATING FUNCTION REMOVE ITEM 
+function removeItem(e){
+if(e.target.classList.contains('delete')){
+    if(confirm('Are you sure?')){
+        var li= e.target.parentElement;
+        list.removeChild(li)
+    }
+}
+}
