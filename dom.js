@@ -35,9 +35,12 @@ li.appendChild(deleteBtn)
 
 
 // STORING IT TO LOCAL STORAGE 
-    localStorage.setItem('item',input+"  "+ description)
-
-
+    let myObj= {
+        item: input,
+        detail: description
+    }
+   let myObjstore= JSON.stringify(myObj)
+   localStorage.setItem("item", myObjstore)
  }
 
 //  CREATING FUNCTION REMOVE ITEM 
