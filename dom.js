@@ -32,6 +32,12 @@ filter.addEventListener('keyup', filterItems)
 deleteBtn.appendChild(document.createTextNode('X'))
 // PUSH THE DELETE BTN INTO LI 
 li.appendChild(deleteBtn)
+
+
+// STORING IT TO LOCAL STORAGE 
+    localStorage.setItem('item',input+"  "+ description)
+
+
  }
 
 //  CREATING FUNCTION REMOVE ITEM 
@@ -64,3 +70,6 @@ else{
 
 });
 }
+
+
+
