@@ -40,8 +40,10 @@ li.appendChild(deleteBtn)
         detail: description
     }
    let myObjstore= JSON.stringify(myObj)
-   localStorage.setItem("item", myObjstore)
+   localStorage.setItem(myObj.item, myObjstore)
+   console.log(localStorage.getItem("item"))
  }
+
 
 //  CREATING FUNCTION REMOVE ITEM 
 function removeItem(e){
@@ -51,6 +53,8 @@ if(e.target.classList.contains('delete')){
         list.removeChild(li)
     }
 }
+
+
 }
 // CREATING FILTER EVENT LISTENER 
 
