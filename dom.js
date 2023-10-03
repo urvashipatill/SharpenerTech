@@ -1,11 +1,15 @@
 let form= document.getElementById("addForm")
 let list= document.getElementById('items')
 var filter= document.getElementById('filter')
+
+
+
 // ADD ITEM OR RESPONSE ON SUBMIT BUTTON 
  form.addEventListener('submit', addItems)
 
 //  REMOVE ITEM OR RESPONSE ON DELETE CLICK 
 list.addEventListener('click', removeItem)
+// list.addEventListener('click', removelocalstore)
 
 // FILTER EVENT 
 filter.addEventListener('keyup', filterItems)
@@ -14,9 +18,10 @@ filter.addEventListener('keyup', filterItems)
 //  CREATING FUNCTION addITems 
  function addItems(e){
     e.preventDefault()
-// GET THE INPUT VALUE 
-    let input= document.getElementById('item').value
-    let description= document.getElementById('describe').value
+    // GET THE INPUT VALUE 
+let input= document.getElementById('item').value
+let description= document.getElementById('describe').value
+
 // CREATE li ELEMENT
     var li= document.createElement('li')
     li.className ="list-group-item"
@@ -41,17 +46,22 @@ li.appendChild(deleteBtn)
     }
    let myObjstore= JSON.stringify(myObj)
    localStorage.setItem(myObj.item, myObjstore)
-   console.log(localStorage.getItem("item"))
- }
 
+// DELETING FROM LOCAL STORAGE 
+   deleteBtn.onclick= () => {
+    localStorage.removeItem(myObj.item)
+} 
+ }
 
 //  CREATING FUNCTION REMOVE ITEM 
 function removeItem(e){
+   
 if(e.target.classList.contains('delete')){
     if(confirm('Are you sure?')){
         var li= e.target.parentElement;
         list.removeChild(li)
     }
+   
 }
 
 
