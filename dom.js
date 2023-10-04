@@ -6,13 +6,11 @@ var filter= document.getElementById('filter')
 
 // ADD ITEM OR RESPONSE ON SUBMIT BUTTON 
  form.addEventListener('submit', addItems)
-
 //  REMOVE ITEM OR RESPONSE ON DELETE CLICK 
-list.addEventListener('click', removeItem)
-// list.addEventListener('click', removelocalstore)
-
+// list.addEventListener('click', removeItem)
 // FILTER EVENT 
 filter.addEventListener('keyup', filterItems)
+
 
 
 //  CREATING FUNCTION addITems 
@@ -21,7 +19,6 @@ filter.addEventListener('keyup', filterItems)
     // GET THE INPUT VALUE 
 let input= document.getElementById('item').value
 let description= document.getElementById('describe').value
-
 // CREATE li ELEMENT
     var li= document.createElement('li')
     li.className ="list-group-item"
@@ -30,14 +27,18 @@ let description= document.getElementById('describe').value
     li.appendChild(document.createTextNode(input))
     li.appendChild(document.createTextNode(" "+description))
     list.appendChild(li)
+
+    // CREATE A EDIT BTN FOR NEW ELEM 
+let editBtn= document.createElement('button')
+editBtn.className= "btn float-sm-right"
+editBtn.appendChild(document.createTextNode('EDIT'))
+li.appendChild(editBtn)
+
 // CREATE THE DELETE BTN FOR NEW ELEM
     let deleteBtn= document.createElement('button')
-    deleteBtn.className= 'btn btn-danger btn-sm float-right delete' 
-//CREATE TEXT NODE IN DELTE BTN AS "X"
-deleteBtn.appendChild(document.createTextNode('X'))
-// PUSH THE DELETE BTN INTO LI 
-li.appendChild(deleteBtn)
-
+    deleteBtn.className= 'btn btn-danger btn float-right delete' 
+    deleteBtn.appendChild(document.createTextNode('X'))
+    li.appendChild(deleteBtn)
 
 // STORING IT TO LOCAL STORAGE 
     let myObj= {
@@ -47,28 +48,40 @@ li.appendChild(deleteBtn)
    let myObjstore= JSON.stringify(myObj)
    localStorage.setItem(myObj.item, myObjstore)
 
+document.getElementById('item').value= "";
+document.getElementById('describe').value= "";
 // DELETING FROM LOCAL STORAGE 
-   deleteBtn.onclick= () => {
+   deleteBtn.onclick= (e) => 
+   {
     localStorage.removeItem(myObj.item)
-} 
- }
+    if(e.target.className='btn btn-danger btn float-right delete')
+    {
+        if(confirm('Are you sure?'))
+        {
+            var li= e.target.parentElement;
+            list.removeChild(li)
+        }
+      } 
+   }
 
-//  CREATING FUNCTION REMOVE ITEM 
-function removeItem(e){
-   
-if(e.target.classList.contains('delete')){
-    if(confirm('Are you sure?')){
-        var li= e.target.parentElement;
-        list.removeChild(li)
+  editBtn.onclick= (e) => {
+    localStorage.removeItem(myObj.item)
+    if(e.target.className= "btn float-sm-right"){
+        if(confirm('Do you want to edit?')){
+            var li= e.target.parentElement;
+            list.removeChild(li)
+        }
     }
-   
+    // POPING THE VALUE ON INPUT AGAIN 
+    document.getElementById('item').value= input
+    document.getElementById('describe').value=description
+  }
+  
 }
 
-
-}
 // CREATING FILTER EVENT LISTENER 
-
 function filterItems(e){
+
 // CONVERT IT INTO LOWERCASE 
 var text= e.target.value.toLowerCase();
 // GET list 
