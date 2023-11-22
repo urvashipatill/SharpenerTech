@@ -9,20 +9,16 @@
 <body>
 <h2>BOOK YOUR APPOINTMENT</h2>
 <p>Submit your details and we will confirm your appointment via your contact details</p>
-<form class="forms" id="formlist">
-    <div>
+<form onsubmit= 'additems(event)' id="formlist">
+    
         Name:<input type="text" class="name" id="username">
         Number:<input type="text" class="phonenumber" id="userno">
         Email:<input type="text" class="email" id="usermail">
-        Submit:<input type="button" class="submitBtn" id="submitbtn">
-
-    </div>
-
-    
+        <button>SUBMIT</button>
 </form>    
+<ul id="ListOfUsers"></ul>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="appointment.js"></script>
 
 </body>
 </html>
-This request is using an authorizatio

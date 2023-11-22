@@ -1,97 +1,86 @@
-let submitBtn= document.getElementById('submitbtn')
-submitBtn.textContent='SUBMIT'
-let list= document.getElementById('formlist')
-submitBtn.addEventListener('click', additems)
+let list= document.getElementById('ListOfUsers')
 
 
-function additems(){
-let inputname= document.getElementById('username').value
-let inputnumber= document.getElementById('userno').value
-let inputmail= document.getElementById('usermail').value
 
+function additems(event)
+{ 
+   
+ event.preventDefault()
+const inputname= event.target.username.value
+const inputnumber= event.target.userno.value
+const inputmail= event.target.usermail.value
 
+if(inputname && inputnumber && inputmail){
 // storage 
 let obj={
-   Name:inputname,
-   Number:inputnumber,
-   Email:inputmail
+  inputname,
+  inputnumber,
+   inputmail
 
 }
 let newData= JSON.stringify(obj)
 
 // posting it into axios 
 
-   axios.post('https://crudcrud.com/api/00026c8cf007492facf10f8a5d21fc86/appointdata',obj)
+   axios.post('https://crudcrud.com/api/f4acee92d7674410874c6833f8d46dbf/appointmentData',obj)
    .then((response) =>{
-      console.log(response.data._id)
-      console.log(response.data)
+      
    showonScreen(response.data)
    })
    .catch((err) =>{
    console.log(err)
    })
-
+} 
+else{
+   alert('Please enter all your details')
 }
-  
-   // show on screen 
-   function showonScreen(e)
-   {
-   let li= document.createElement('li')
-   li.className= 'list-group-item'
-   // remove button 
-   let removeBtn= document.createElement('button')
-    removeBtn.textContent='REMOVE'
-    removeBtn.id='remove'
-      //  edit button 
-    let editBtn=document.createElement('button')
-    editBtn.textContent='EDIT'
-    editBtn.id='edit'
+}
 
-    removeBtn.onclick=(e) =>{
-      confirm('Do you want to delete?')
-      {
-          let li= e.target.parentElement
-          list.removeChild(li)
-          console.log(li)
-          
-      }
-       }
-       editBtn.onclick=(e) =>{
-         confirm('Do you want to make chages?')
-             {   let li=e.target.parentElement
-              list.removeChild(li)
-                 document.getElementById('username').value=Inpname
-                 document.getElementById('userno').value=Inpnumber
-                 document.getElementById('usermail').value=Inpemail
-             }
-          }
-    li.appendChild(document.createTextNode(e.Name))
-    li.appendChild(document.createTextNode(" "+ e.Number))
-    li.appendChild(document.createTextNode(" "+ e.Email))
-    li.appendChild(document.createTextNode(" "+e._id))
-    li.appendChild(removeBtn)
-    li.appendChild(editBtn)
-    list.appendChild(li)
 
-   }
-   document.getElementById('username').value=""
-   document.getElementById('userno').value=""
-   document.getElementById('usermail').value=""   
-
-   axios.get('https://crudcrud.com/api/00026c8cf007492facf10f8a5d21fc86/appointdata')
+window.addEventListener('DOMContentLoaded', ()=>{
+   axios.get('https://crudcrud.com/api/f4acee92d7674410874c6833f8d46dbf/appointmentData')
    .then((e) =>{
-      
-      let arr=e.data
-      for ( i=0; i<arr.length;i++) {
-         showonScreen(arr[i])
-      }; 
+      for(let i=0; i<e.data.length; i++){
+      showonScreen(e.data[i])
+      }
       })
       .catch((err) =>{
          console.log(err)
       })
-   
+  })
+   // show on screen 
+   function showonScreen(e)
+   { 
+      document.getElementById('username').value=""
+      document.getElementById('userno').value=""
+      document.getElementById('usermail').value="" 
+    
+      const parentNode= document.getElementById('ListOfUsers')
+      const childHTML =`<li id=${e._id}> 
+                         ${e.inputname} - ${e.inputmail} - ${e.inputnumber}
+                         <button onclick=deleteUser('${e._id}')> Delete User </button>
+                         <button onclick=editUser('${e.Name}','${e.Email}',  '${e.Number}')> Edit User </button>
+                         </li>`
+                        
+                        parentNode.innerHTML= parentNode.innerHTML+childHTML;
+   }
 
+function deleteUser(id){
+   confirm('Do you want to delete?')
+    {
+      axios.delete(`https://crudcrud.com/api/f4acee92d7674410874c6833f8d46dbf/appointmentData/${id}`)
+      .then((response) =>{
+         const parentNode= document.getElementById('ListOfUsers')
+          const ChildNOde=document.getElementById(id)
+           if(ChildNOde){
+         parentNode.removeChild(ChildNOde)
+          }
+      })
+      .catch((err) =>{
+         console.log(err)
+      })
+      
+   }
+    }
+    
 
-
-
-   
