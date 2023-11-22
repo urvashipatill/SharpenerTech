@@ -22,7 +22,7 @@ let newData= JSON.stringify(obj)
 
 // posting it into axios 
 
-   axios.post('https://crudcrud.com/api/f4acee92d7674410874c6833f8d46dbf/appointmentData',obj)
+   axios.post('https://crudcrud.com/api/6b4d6f68e0a84cc290ea19b7d3ecff30/appointmentData',obj)
    .then((response) =>{
       
    showonScreen(response.data)
@@ -38,7 +38,7 @@ else{
 
 
 window.addEventListener('DOMContentLoaded', ()=>{
-   axios.get('https://crudcrud.com/api/f4acee92d7674410874c6833f8d46dbf/appointmentData')
+   axios.get('https://crudcrud.com/api/6b4d6f68e0a84cc290ea19b7d3ecff30/appointmentData')
    .then((e) =>{
       for(let i=0; i<e.data.length; i++){
       showonScreen(e.data[i])
@@ -56,19 +56,19 @@ window.addEventListener('DOMContentLoaded', ()=>{
       document.getElementById('usermail').value="" 
     
       const parentNode= document.getElementById('ListOfUsers')
-      const childHTML =`<li id=${e._id}> 
-                         ${e.inputname} - ${e.inputmail} - ${e.inputnumber}
+      const childHTML =`<li id=${e._id}>  Name:${e.inputname} - ${e.inputnumber} - ${e.inputmail}
                          <button onclick=deleteUser('${e._id}')> Delete User </button>
-                         <button onclick=editUser('${e.Name}','${e.Email}',  '${e.Number}')> Edit User </button>
+                         <button onclick=editUser('${e._id}')> Edit User </button>
                          </li>`
                         
                         parentNode.innerHTML= parentNode.innerHTML+childHTML;
+                        console.log(e)
    }
 
 function deleteUser(id){
-   confirm('Do you want to delete?')
+   confirm('Do you want to make changes?')
     {
-      axios.delete(`https://crudcrud.com/api/f4acee92d7674410874c6833f8d46dbf/appointmentData/${id}`)
+      axios.delete(`https://crudcrud.com/api/6b4d6f68e0a84cc290ea19b7d3ecff30/appointmentData/${id}`)
       .then((response) =>{
          const parentNode= document.getElementById('ListOfUsers')
           const ChildNOde=document.getElementById(id)
@@ -82,5 +82,55 @@ function deleteUser(id){
       
    }
     }
+
+function editUser(id)
+{
+   
+      axios.get(`https://crudcrud.com/api/6b4d6f68e0a84cc290ea19b7d3ecff30/appointmentData/${id}`)
+      .then((response) =>{
+      let name1= response.data.inputname
+       let number= response.data.inputnumber
+      let email= response.data.inputmail
+
+      document.getElementById('username').value=name1
+      document.getElementById('userno').value=number
+      document.getElementById('usermail').value=email 
+      
+      })
+      .catch((err)=>{
+         console.log(err)
+      })
+      
+      deleteUser(id)
+      
+      // const newname=document.getElementById('username').value
+      // const newno= document.getElementById('userno').value
+      // const newemail= document.getElementById('usermail').value
+
+     
+      // const obj2={
+      //    newname,
+      //    newno,
+      //    newemail
+      // }
+
+      // axios.post('https://crudcrud.com/api/f4acee92d7674410874c6833f8d46dbf/appointmentData',obj2)
+      // .then((response) =>{
+      //    console.log(response)
+      // })
+      // .catch((err) =>{
+      //    console.log(err)
+      // })
+      // axios.put(`https://crudcrud.com/api/f4acee92d7674410874c6833f8d46dbf/appointmentData/${id}`)
+      // .then((response) =>{
+         
+      
+      // })
+      // .catch((err) =>{
+      //  console.log(err)
+      // })
+     
+   }
+
     
 
